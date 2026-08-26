@@ -92,11 +92,11 @@
     </div>
   </header>
 
-  <!-- 2. HERO SECTION & CALL TO ACTION (Rule of Thirds Alignment) -->
+  <!-- 2. HERO SECTION & CALL TO ACTION -->
   <section id="home" class="blueprint-bg text-white py-20 px-4 sm:px-6 lg:px-8 relative border-b border-slate-700">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
       
-      <!-- Left 2/3: Value Proposition (Rule of Thirds Focus) -->
+      <!-- Left 2/3: Value Proposition -->
       <div class="lg:col-span-2 space-y-6">
         <div class="inline-flex items-center space-x-2 bg-slate-800/80 border border-slate-600 px-3 py-1 rounded-sm text-xs font-mono text-eng-accent">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -198,11 +198,11 @@
             <div>
               <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Rating Grade</label>
               <select id="review-rating" class="w-full p-2 text-sm border border-slate-300 rounded">
-                <option value="5">????? (5/5) - Excellent Grade</option>
-                <option value="4">????? (4/5) - Standard Compliance</option>
-                <option value="3">????? (3/5) - Acceptable</option>
-                <option value="2">????? (2/5) - Defective</option>
-                <option value="1">????? (1/5) - Reject</option>
+                <option value="5">★★★★★ (5/5) - Excellent Grade</option>
+                <option value="4">★★★★☆ (4/5) - Standard Compliance</option>
+                <option value="3">★★★☆☆ (3/5) - Acceptable</option>
+                <option value="2">★★☆☆☆ (2/5) - Defective</option>
+                <option value="1">★☆☆☆☆ (1/5) - Reject</option>
               </select>
             </div>
             <div>
@@ -296,7 +296,7 @@
     </div>
   </footer>
 
-  <!-- MODAL 1: AUTHENTICATION (GCash Number Input) -->
+  <!-- MODAL 1: AUTHENTICATION -->
   <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded max-w-md w-full p-6 shadow-2xl relative border-t-4 border-eng-safety">
       <button onclick="toggleModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -346,29 +346,14 @@
     </div>
   </div>
 
-  <!-- OPTIONAL: VOICEFLOW AI CHATBOT CODE -->
-  <script type="text/javascript">
-    (function(d, t) {
-        var v = d.createElement(t), s = d.getElementsByTagName(t)[0];
-        v.onload = function() {
-          window.voiceflow.chat.load({
-            verify: { projectID: 'YOUR_VOICEFLOW_PROJECT_ID' },
-            url: 'https://general-runtime.voiceflow.com',
-            versionID: 'production'
-          });
-        }
-        v.src = "https://cdn.voiceflow.com/widget/bundle.mjs"; v.type = "text/javascript"; s.parentNode.insertBefore(v, s);
-    })(document, 'script');
-  </script>
-
-  <!-- APPLICATION LOGIC & SUPABASE/PAYMONGO WIRING -->
+  <!-- APPLICATION LOGIC & SUPABASE WIRING -->
   <script>
-    // 1. Supabase Initialization
-    const SUPABASE_URL = 'https://YOUR_SUPABASE_PROJECT_ID.supabase.co';
-    const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY';
-    const supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    // 1. Supabase Credentials
+    const SUPABASE_URL = 'https://jmqqnvvdmdfcazcmnmhm.supabase.co';
+    const SUPABASE_ANON_KEY = 'sb_publishable_XP1H9qDYaKOdmKKox-BpNw_koQ3g-ar';
+    const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // Initial Mock Products (Engineering Grade Stock)
+    // Initial Fallback Products
     const mockProducts = [
       { id: '1', name: 'Portland Cement Type 1 (40kg)', price: 285.00, img: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=400', desc: 'High-compressive strength hydraulic cement for structural concrete works.' },
       { id: '2', name: 'Deformed Steel Rebar 12mm x 6m', price: 220.00, img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400', desc: 'Grade 40 high-yield tensile deformed rebar for concrete reinforcement.' },
@@ -383,7 +368,7 @@
       const grid = document.getElementById('product-grid');
       grid.innerHTML = '';
 
-      const { data: products } = await supabase.from('products').select('*');
+      const { data: products } = await _supabase.from('products').select('*');
       const itemsToRender = (products && products.length > 0) ? products : mockProducts;
 
       itemsToRender.forEach(prod => {
@@ -400,7 +385,7 @@
             <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
               <div>
                 <span class="text-[10px] font-mono uppercase text-slate-400 block">Unit Cost</span>
-                <span class="text-xl font-bold font-mono text-eng-steel">?${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
+                <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
               </div>
               <button onclick="initiatePayment('${prod.name}', ${prod.price})" class="bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold px-4 py-2.5 rounded transition-colors shadow">
                 Buy via GCash
@@ -435,9 +420,9 @@
       const password = document.getElementById('auth-password').value;
       const gcash = document.getElementById('auth-gcash').value;
 
-      const { data, error } = await supabase.auth.signUp({ email, password });
+      const { data, error } = await _supabase.auth.signUp({ email, password });
       if (!error && data.user) {
-        await supabase.from('profiles').insert([{ id: data.user.id, email, gcash_number: gcash }]);
+        await _supabase.from('profiles').insert([{ id: data.user.id, email, gcash_number: gcash }]);
         alert('Account registered & GCash number saved.');
       } else {
         alert('Auth setup: ' + (error ? error.message : 'Registered successfully'));
@@ -454,7 +439,7 @@
         desc: document.getElementById('prod-desc').value
       };
 
-      const { error } = await supabase.from('products').insert([newProd]);
+      const { error } = await _supabase.from('products').insert([newProd]);
       if (!error) {
         alert('Material listed!');
         fetchProducts();
@@ -471,7 +456,7 @@
       const rating = document.getElementById('review-rating').value;
       const comment = document.getElementById('review-comment').value;
 
-      const { error } = await supabase.from('reviews').insert([{ product_id: productId, rating, comment }]);
+      const { error } = await _supabase.from('reviews').insert([{ product_id: productId, rating, comment }]);
       if (!error) {
         alert('Review logged.');
         loadReviews();
@@ -483,7 +468,7 @@
 
     async function loadReviews() {
       const container = document.getElementById('reviews-list');
-      const { data: reviews } = await supabase.from('reviews').select('*');
+      const { data: reviews } = await _supabase.from('reviews').select('*');
       
       const defaultReviews = reviews || [
         { product_id: '1', rating: 5, comment: 'Tested batch compressive strength at 28 days. Met all structural requirements.' },
@@ -494,7 +479,7 @@
         <div class="p-4 bg-white border border-slate-300 rounded">
           <div class="flex justify-between items-center mb-2">
             <span class="text-xs font-mono font-bold text-eng-steel">ITEM SPEC ID: #${rev.product_id}</span>
-            <span class="text-amber-500 text-xs">${'?'.repeat(rev.rating)}${'?'.repeat(5 - rev.rating)}</span>
+            <span class="text-amber-500 text-xs">${'★'.repeat(rev.rating)}${'☆'.repeat(5 - rev.rating)}</span>
           </div>
           <p class="text-xs text-slate-700 font-medium">"${rev.comment}"</p>
         </div>

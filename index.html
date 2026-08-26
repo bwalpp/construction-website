@@ -15,6 +15,8 @@
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+  <!-- Stripe JS SDK -->
+  <script src="https://js.stripe.com/v3/"></script>
   <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
@@ -125,7 +127,7 @@
           Vendor Portal
         </div>
         <h3 class="font-heading text-2xl font-bold text-white uppercase mb-2">Sell Supplies</h3>
-        <p class="text-xs text-slate-300 mb-6">Connect directly with project engineers & contractors. Receive payout settlements through GCash integration.</p>
+        <p class="text-xs text-slate-300 mb-6">Connect directly with project engineers & contractors. Receive payout settlements smoothly.</p>
         <form onsubmit="event.preventDefault(); toggleModal('sell-modal');" class="space-y-4">
           <div>
             <label class="block text-xs font-mono uppercase text-slate-400 mb-1">Product Category</label>
@@ -149,8 +151,8 @@
           <p class="text-xs text-slate-600 mt-2">All materials meet structural compliance testing for industrial construction projects.</p>
         </div>
         <div class="p-4 border-l-4 border-eng-safety">
-          <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">GCash Instant Settlement</h3>
-          <p class="text-xs text-slate-600 mt-2">Secure digital checkout integrated via PayMongo payment gateway.</p>
+          <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">Stripe Secure Settlement</h3>
+          <p class="text-xs text-slate-600 mt-2">Secure digital checkout integrated via Stripe payment gateway.</p>
         </div>
         <div class="p-4 border-l-4 border-eng-accent">
           <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">Contractor Dashboard</h3>
@@ -227,10 +229,10 @@
       <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
         <div>
           <h3 class="font-heading text-xl font-bold uppercase text-eng-steel mb-2">User & Seller Dashboard</h3>
-          <p class="text-xs text-slate-600 mb-4">Manage logged transactions, GCash payouts, and posted construction products.</p>
+          <p class="text-xs text-slate-600 mb-4">Manage logged transactions and posted construction products.</p>
           <div class="bg-white p-4 border border-slate-300 rounded font-mono text-xs text-slate-700">
             <p><strong>System Status:</strong> Operational</p>
-            <p><strong>Payment Gateway:</strong> PayMongo GCash API Active</p>
+            <p><strong>Payment Gateway:</strong> Stripe Active</p>
             <p><strong>Database Sync:</strong> Supabase Connected</p>
           </div>
         </div>
@@ -280,13 +282,12 @@
         </ul>
       </div>
 
-      <!-- Col 4 & 5: PayMongo / GCash Payments -->
+      <!-- Col 4 & 5: Stripe Payments -->
       <div class="col-span-2">
         <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Payment Integrations</h4>
-        <p class="text-xs text-slate-300 mb-4">Fully automated payments processing connected to PayMongo API with GCash e-wallet payout support.</p>
+        <p class="text-xs text-slate-300 mb-4">Automated payments processing connected with Stripe API.</p>
         <div class="flex items-center space-x-3">
-          <span class="bg-slate-800 text-sky-400 font-bold px-3 py-1.5 rounded text-xs border border-slate-700 font-mono">GCash Official</span>
-          <span class="bg-slate-800 text-emerald-400 font-bold px-3 py-1.5 rounded text-xs border border-slate-700 font-mono">PayMongo API</span>
+          <span class="bg-slate-800 text-sky-400 font-bold px-3 py-1.5 rounded text-xs border border-slate-700 font-mono">Stripe Checkout</span>
         </div>
       </div>
     </div>
@@ -309,10 +310,6 @@
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Password</label>
           <input type="password" id="auth-password" class="w-full border border-slate-300 p-2.5 rounded text-sm" required />
-        </div>
-        <div>
-          <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Registered GCash Number</label>
-          <input type="text" id="auth-gcash" placeholder="09XXXXXXXXX" pattern="09[0-9]{9}" class="w-full border border-slate-300 p-2.5 rounded text-sm font-mono" required />
         </div>
         <button type="submit" class="w-full bg-eng-safety text-white font-heading uppercase py-3 rounded font-bold text-sm">Save & Authenticate</button>
       </form>
@@ -346,12 +343,16 @@
     </div>
   </div>
 
-  <!-- APPLICATION LOGIC & SUPABASE WIRING -->
+  <!-- APPLICATION LOGIC, SUPABASE & STRIPE WIRING -->
   <script>
     // 1. Supabase Credentials
     const SUPABASE_URL = 'https://jmqqnvvdmdfcazcmnmhm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_XP1H9qDYaKOdmKKox-BpNw_koQ3g-ar';
     const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+    // 2. Stripe Credentials
+    const STRIPE_PUBLISHABLE_KEY = 'pk_test_51U8gQ31jcq8bFyP30hvQ86nUgKXBxD1u9GquoRSaz0xCBPxnu5dLP11JljKaReL7SfF7grcyBWyYqXndq9N0lQ1V008SfzkaDK';
+    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
     // Initial Fallback Products
     const mockProducts = [
@@ -388,7 +389,7 @@
                 <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
               </div>
               <button onclick="initiatePayment('${prod.name}', ${prod.price})" class="bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold px-4 py-2.5 rounded transition-colors shadow">
-                Buy via GCash
+                Buy via Stripe
               </button>
             </div>
           </div>
@@ -398,16 +399,16 @@
 
     async function initiatePayment(productName, price) {
       try {
-        const response = await fetch('/api/paymongo-checkout', {
+        const response = await fetch('/api/stripe-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ name: productName, amount: price * 100 })
         });
         const session = await response.json();
-        if (session.checkout_url) {
-          window.location.href = session.checkout_url;
+        if (session.url) {
+          window.location.href = session.url;
         } else {
-          alert('Failed to obtain GCash payment link.');
+          alert('Failed to obtain payment link.');
         }
       } catch (e) {
         alert('Payment server endpoint unavailable.');
@@ -418,12 +419,11 @@
       e.preventDefault();
       const email = document.getElementById('auth-email').value;
       const password = document.getElementById('auth-password').value;
-      const gcash = document.getElementById('auth-gcash').value;
 
       const { data, error } = await _supabase.auth.signUp({ email, password });
       if (!error && data.user) {
-        await _supabase.from('profiles').insert([{ id: data.user.id, email, gcash_number: gcash }]);
-        alert('Account registered & GCash number saved.');
+        await _supabase.from('profiles').insert([{ id: data.user.id, email }]);
+        alert('Account registered successfully.');
       } else {
         alert('Auth setup: ' + (error ? error.message : 'Registered successfully'));
       }
@@ -491,24 +491,24 @@
       loadReviews();
     }
   </script>
-<!-- BOTPRESS FLOATING CHAT WIDGET -->
-<div style="position: fixed; bottom: 20px; right: 20px; z-index: 99999;">
-  <!-- TOGGLE BUTTON -->
-  <button onclick="var box = document.getElementById('bp-chat-box'); box.style.display = box.style.display === 'none' ? 'block' : 'none';" 
-          style="background-color: #2563eb; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
-    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
-      <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
-    </svg>
-  </button>
 
-  <!-- CHAT WINDOW -->
-  <div id="bp-chat-box" style="display: none; position: absolute; bottom: 70px; right: 0; width: 380px; height: 550px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #e2e8f0;">
-    <iframe 
-      src="https://cdn.botpress.cloud/webchat/v5.0/shareable.html?configUrl=https://files.bpcontent.cloud/2026/08/26/05/20260826053006-ZW88JRVT.json" 
-      style="width: 100%; height: 100%; border: none;">
-    </iframe>
+  <!-- BOTPRESS FLOATING CHAT WIDGET -->
+  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 99999;">
+    <!-- TOGGLE BUTTON -->
+    <button onclick="var box = document.getElementById('bp-chat-box'); box.style.display = box.style.display === 'none' ? 'block' : 'none';" 
+            style="background-color: #2563eb; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+        <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+      </svg>
+    </button>
+
+    <!-- CHAT WINDOW -->
+    <div id="bp-chat-box" style="display: none; position: absolute; bottom: 70px; right: 0; width: 380px; height: 550px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #e2e8f0;">
+      <iframe 
+        src="https://cdn.botpress.cloud/webchat/v5.0/shareable.html?configUrl=https://files.bpcontent.cloud/2026/08/26/05/20260826053006-ZW88JRVT.json" 
+        style="width: 100%; height: 100%; border: none;">
+      </iframe>
+    </div>
   </div>
-</div>
-</script>
 </body>
 </html>

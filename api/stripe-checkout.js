@@ -1,4 +1,6 @@
 const Stripe = require('stripe');
+
+// Accesses secret key securely from Vercel Environment Variables
 const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
 
 module.exports = async (req, res) => {
@@ -14,9 +16,9 @@ module.exports = async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: 'php', // Change to 'usd' if your Stripe account currency is set to USD
+            currency: 'php',
             product_data: { name: name },
-            unit_amount: Math.round(Number(amount)), // Ensures integer value in cents/centavos
+            unit_amount: Math.round(Number(amount)), // Amount in centavos
           },
           quantity: 1,
         },

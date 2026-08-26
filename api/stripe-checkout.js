@@ -1,7 +1,5 @@
 const Stripe = require('stripe');
-
-// Accesses secret key securely from Vercel Environment Variables
-const stripe = Stripe(process.env.STRIPE_SECRET_KEY);
+const stripe = Stripe(process.env.stripe_secret_key);
 
 module.exports = async (req, res) => {
   if (req.method !== 'POST') {
@@ -11,14 +9,17 @@ module.exports = async (req, res) => {
   try {
     const { name, amount } = req.body;
 
+    // Convert string to integer and multiply by 100 for cents/centavos
+    const unitAmount = Math.round(parseFloat(amount) * 100);
+
     const session = await stripe.checkout.sessions.create({
       payment_method_types: ['card'],
       line_items: [
         {
           price_data: {
-            currency: 'php',
-            product_data: { name: name },
-            unit_amount: Math.round(Number(amount)), // Amount in centavos
+            currency: 'php', // Or 'usd' depending on your Stripe dashboard default
+            product_data: { name: name || 'Construction Supply' },
+            unit_amount: unitAmount,
           },
           quantity: 1,
         },
@@ -30,7 +31,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ url: session.url });
   } catch (err) {
-    console.error('Stripe Error:', err.message);
+    console.error('Stripe API Error:', err.message);
     return res.status(500).json({ error: err.message });
   }
 };

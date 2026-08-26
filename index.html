@@ -491,9 +491,24 @@
       loadReviews();
     }
   </script>
-  <!-- BOTPRESS CHATBOT EMBED -->
-<script src="https://cdn.botpress.cloud/webchat/v2.2/inject.js"></script>
-<script src="https://mediafiles.botpress.cloud/6a06bc94-de87-4c72-8a4f-c227a1f0d130/webchat/v2.2/config.js" defer></script>
+<!-- BOTPRESS FLOATING CHAT WIDGET -->
+<div style="position: fixed; bottom: 20px; right: 20px; z-index: 99999;">
+  <!-- TOGGLE BUTTON -->
+  <button onclick="var box = document.getElementById('bp-chat-box'); box.style.display = box.style.display === 'none' ? 'block' : 'none';" 
+          style="background-color: #2563eb; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
+      <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
+    </svg>
+  </button>
+
+  <!-- CHAT WINDOW -->
+  <div id="bp-chat-box" style="display: none; position: absolute; bottom: 70px; right: 0; width: 380px; height: 550px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #e2e8f0;">
+    <iframe 
+      src="https://cdn.botpress.cloud/webchat/v5.0/shareable.html?configUrl=https://files.bpcontent.cloud/2026/08/26/05/20260826053006-ZW88JRVT.json" 
+      style="width: 100%; height: 100%; border: none;">
+    </iframe>
+  </div>
+</div>
 </script>
 </body>
 </html>

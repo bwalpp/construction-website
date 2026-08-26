@@ -14,9 +14,9 @@ module.exports = async (req, res) => {
       line_items: [
         {
           price_data: {
-            currency: 'php',
+            currency: 'php', // Change to 'usd' if your Stripe account currency is set to USD
             product_data: { name: name },
-            unit_amount: amount,
+            unit_amount: Math.round(Number(amount)), // Ensures integer value in cents/centavos
           },
           quantity: 1,
         },
@@ -28,6 +28,7 @@ module.exports = async (req, res) => {
 
     return res.status(200).json({ url: session.url });
   } catch (err) {
+    console.error('Stripe Error:', err.message);
     return res.status(500).json({ error: err.message });
   }
 };

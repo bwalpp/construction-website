@@ -7,18 +7,13 @@
   <meta name="google-site-verification" content="sNjd7H3Xd6HAl4yexvAhYZj--spovQR3Ush1hvGWlzQ" />
   <title>BuildCraft Supplies | Industrial Construction Materials</title>
   
-  <!-- Google Fonts: Oswald (Headings) & Inter (Body) -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Tailwind CSS CDN -->
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Supabase JS Client -->
   <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-  <!-- Stripe JS SDK -->
   <script src="https://js.stripe.com/v3/"></script>
-  <!-- FontAwesome Icons -->
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
   <script>
@@ -31,11 +26,11 @@
           },
           colors: {
             eng: {
-              steel: '#1B2A4A',      /* Dark Steel Navy Primary */
-              safety: '#FF5722',     /* Safety/High-Vis Orange Accent */
-              concrete: '#F1F5F9',   /* Crisp Light Blueprint/Concrete Gray */
-              slate: '#334155',      /* Structural Dark Gray */
-              accent: '#0284C7'      /* Engineering Cyan */
+              steel: '#1B2A4A',
+              safety: '#FF5722',
+              concrete: '#F1F5F9',
+              slate: '#334155',
+              accent: '#0284C7'
             }
           }
         }
@@ -60,11 +55,9 @@
 </head>
 <body class="bg-eng-concrete text-eng-slate font-sans antialiased flex flex-col min-h-screen grid-pattern">
 
-  <!-- 1. HEADER & NAVIGATION -->
+  <!-- HEADER -->
   <header class="bg-eng-steel text-white sticky top-0 z-50 shadow-lg border-b-2 border-eng-safety">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
-      
-      <!-- Brand Logo -->
       <a href="#home" class="flex items-center space-x-3 group">
         <div class="w-10 h-10 bg-eng-safety flex items-center justify-center font-heading font-black text-2xl text-white rounded shadow-md transform group-hover:rotate-3 transition-transform">
           B
@@ -75,7 +68,6 @@
         </div>
       </a>
 
-      <!-- Navigational Links -->
       <nav class="hidden md:flex space-x-6 text-sm font-semibold tracking-wide uppercase font-heading">
         <a href="#home" class="hover:text-eng-safety transition-colors">Home</a>
         <a href="#store" class="hover:text-eng-safety transition-colors">Store Page</a>
@@ -85,14 +77,11 @@
         <a href="#dashboard" class="hover:text-eng-safety transition-colors">Dashboard</a>
       </nav>
 
-      <!-- Dynamic Auth UI State Container -->
       <div id="auth-nav-container">
-        <!-- Default State: Unauthenticated -->
         <button id="nav-login-btn" onclick="toggleModal('auth-modal')" class="bg-eng-safety hover:bg-orange-600 text-white font-heading tracking-wider uppercase px-5 py-2.5 rounded text-sm font-bold shadow-md transition-all border border-orange-400">
           Sign In / Register
         </button>
 
-        <!-- Authenticated State (Hidden initially) -->
         <div id="nav-user-profile" class="hidden flex items-center space-x-3">
           <div class="text-right hidden sm:block">
             <span id="user-email-display" class="block text-xs font-mono text-slate-300">user@example.com</span>
@@ -103,11 +92,10 @@
           </button>
         </div>
       </div>
-
     </div>
   </header>
 
-  <!-- 2. HERO SECTION & CALL TO ACTION -->
+  <!-- HERO SECTION -->
   <section id="home" class="blueprint-bg text-white py-20 px-4 sm:px-6 lg:px-8 relative border-b border-slate-700">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
       <div class="lg:col-span-2 space-y-6">
@@ -132,7 +120,6 @@
         </div>
       </div>
 
-      <!-- Quick Seller CTA Card -->
       <div class="bg-slate-900/90 border-2 border-slate-700 p-6 rounded-lg shadow-2xl relative">
         <div class="absolute -top-3 right-4 bg-eng-accent text-white text-xs font-mono uppercase px-2 py-0.5 rounded font-bold">
           Vendor Portal
@@ -152,27 +139,7 @@
     </div>
   </section>
 
-  <!-- ABOUT US SECTION -->
-  <section id="about" class="bg-white border-b border-slate-200 py-12">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center">
-        <div class="p-4 border-l-4 border-eng-steel">
-          <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">Verified Standard Quality</h3>
-          <p class="text-xs text-slate-600 mt-2">All materials meet structural compliance testing for industrial construction projects.</p>
-        </div>
-        <div class="p-4 border-l-4 border-eng-safety">
-          <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">Stripe Secure Settlement</h3>
-          <p class="text-xs text-slate-600 mt-2">Secure digital checkout integrated via Stripe payment gateway.</p>
-        </div>
-        <div class="p-4 border-l-4 border-eng-accent">
-          <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">Contractor Dashboard</h3>
-          <p class="text-xs text-slate-600 mt-2">Track purchases, post equipment, and review verified supplier performance.</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 3. STORE PAGE & PRODUCT LISTINGS -->
+  <!-- STORE PAGE -->
   <main id="store" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b-2 border-slate-300 pb-4">
       <div>
@@ -190,7 +157,7 @@
     </div>
   </main>
 
-  <!-- 4. REVIEWS & RATINGS SECTION -->
+  <!-- REVIEWS & RATINGS -->
   <section class="bg-white border-t-2 border-slate-300 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-8">
@@ -199,7 +166,6 @@
       </div>
       
       <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <!-- Add Review Form -->
         <div class="bg-eng-concrete p-6 rounded border border-slate-300 shadow-sm">
           <h3 class="font-heading text-lg font-bold uppercase text-eng-steel mb-4">Submit Evaluation</h3>
           <form id="review-form" onsubmit="submitReview(event)" class="space-y-4">
@@ -225,7 +191,6 @@
           </form>
         </div>
 
-        <!-- Recent Reviews List -->
         <div class="md:col-span-2 space-y-4" id="reviews-list">
           <!-- Reviews Populated Dynamically -->
         </div>
@@ -233,83 +198,18 @@
     </div>
   </section>
 
-  <!-- DASHBOARD / CONTACT INFO SECTION -->
-  <section id="dashboard" class="bg-slate-100 border-t border-slate-300 py-12">
-    <div id="contact" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-        <div>
-          <h3 class="font-heading text-xl font-bold uppercase text-eng-steel mb-2">User & Seller Dashboard</h3>
-          <p class="text-xs text-slate-600 mb-4">Manage logged transactions and posted construction products.</p>
-          <div class="bg-white p-4 border border-slate-300 rounded font-mono text-xs text-slate-700">
-            <p><strong>System Status:</strong> Operational</p>
-            <p><strong>Payment Gateway:</strong> Stripe Active</p>
-            <p><strong>Database Sync:</strong> Supabase Connected</p>
-            <p id="dashboard-user-status"><strong>Current Session:</strong> Guest Mode</p>
-          </div>
-        </div>
-        <div>
-          <h3 class="font-heading text-xl font-bold uppercase text-eng-steel mb-2">Engineering Support Contacts</h3>
-          <p class="text-xs text-slate-600 mb-4">Direct helpline for bulk order inquiries and logistics scheduling.</p>
-          <ul class="text-xs text-slate-700 font-mono space-y-2">
-            <li><i class="fa-solid fa-phone text-eng-safety mr-2"></i> Technical Dispatch: (02) 8123-4567</li>
-            <li><i class="fa-solid fa-envelope text-eng-safety mr-2"></i> Supply Desk: support@buildcraft.ph</li>
-            <li><i class="fa-solid fa-location-dot text-eng-safety mr-2"></i> Logistics Hub: Metro Manila, Philippines</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- 5. FOOTER -->
+  <!-- FOOTER -->
   <footer class="bg-eng-steel text-slate-400 border-t-4 border-eng-safety pt-12 pb-8">
-    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-      <div>
-        <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Sitemap Nav</h4>
-        <ul class="space-y-2 text-xs">
-          <li><a href="#home" class="hover:text-eng-safety transition-colors">Home</a></li>
-          <li><a href="#store" class="hover:text-eng-safety transition-colors">Store Page</a></li>
-          <li><a href="#about" class="hover:text-eng-safety transition-colors">About Us</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">System Portals</h4>
-        <ul class="space-y-2 text-xs">
-          <li><a href="#sell" onclick="toggleModal('sell-modal')" class="hover:text-eng-safety transition-colors">Seller Portal</a></li>
-          <li><a href="#dashboard" class="hover:text-eng-safety transition-colors">Dashboard</a></li>
-          <li><a href="#contact" class="hover:text-eng-safety transition-colors">Contacts</a></li>
-        </ul>
-      </div>
-
-      <div>
-        <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Categories</h4>
-        <ul class="space-y-2 text-xs">
-          <li><span>Structural Steel</span></li>
-          <li><span>Aggregates & Cement</span></li>
-          <li><span>Formwork Lumber</span></li>
-        </ul>
-      </div>
-
-      <div class="col-span-2">
-        <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Payment Integrations</h4>
-        <p class="text-xs text-slate-300 mb-4">Automated payments processing connected with Stripe API.</p>
-        <div class="flex items-center space-x-3">
-          <span class="bg-slate-800 text-sky-400 font-bold px-3 py-1.5 rounded text-xs border border-slate-700 font-mono">Stripe Checkout</span>
-        </div>
-      </div>
-    </div>
-
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-700 pt-6 text-xs text-center font-mono">
       <p>&copy; 2026 BuildCraft Supplies Engine. All engineering rights reserved.</p>
     </div>
   </footer>
 
-  <!-- MODAL 1: TABBED AUTHENTICATION (LOGIN / REGISTER) -->
+  <!-- AUTH MODAL -->
   <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded max-w-md w-full p-6 shadow-2xl relative border-t-4 border-eng-safety">
       <button onclick="toggleModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
       
-      <!-- Tab Controls -->
       <div class="flex border-b border-slate-200 mb-6">
         <button id="tab-signin-btn" onclick="switchAuthTab('signin')" class="flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel">
           Sign In
@@ -319,7 +219,6 @@
         </button>
       </div>
 
-      <!-- Sign In Form -->
       <form id="signin-form" onsubmit="handleSignIn(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Email Address</label>
@@ -334,7 +233,6 @@
         </button>
       </form>
 
-      <!-- Register Form -->
       <form id="signup-form" onsubmit="handleSignUp(event)" class="space-y-4 hidden">
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Email Address</label>
@@ -351,7 +249,7 @@
     </div>
   </div>
 
-  <!-- MODAL 2: POST / SELL PRODUCT -->
+  <!-- SELLER MODAL -->
   <div id="sell-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded max-w-md w-full p-6 shadow-2xl relative border-t-4 border-eng-steel">
       <button onclick="toggleModal('sell-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -378,18 +276,14 @@
     </div>
   </div>
 
-  <!-- APPLICATION LOGIC, AUTH, SUPABASE & STRIPE WIRING -->
   <script>
-    // 1. Supabase Credentials
     const SUPABASE_URL = 'https://jmqqnvvdmdfcazcmnmhm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_XP1H9qDYaKOdmKKox-BpNw_koQ3g-ar';
     const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-    // 2. Stripe Credentials
     const STRIPE_PUBLISHABLE_KEY = 'pk_test_51U8gQ31jcq8bFyP30hvQ86nUgKXBxD1u9GquoRSaz0xCBPxnu5dLP11JljKaReL7SfF7grcyBWyYqXndq9N0lQ1V008SfzkaDK';
     const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
-    // Initial Fallback Products
     const mockProducts = [
       { id: '1', name: 'Portland Cement Type 1 (40kg)', price: 285.00, img: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=400', desc: 'High-compressive strength hydraulic cement for structural concrete works.' },
       { id: '2', name: 'Deformed Steel Rebar 12mm x 6m', price: 220.00, img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400', desc: 'Grade 40 high-yield tensile deformed rebar for concrete reinforcement.' },
@@ -400,101 +294,12 @@
       document.getElementById(id).classList.toggle('hidden');
     }
 
-    function switchAuthTab(tab) {
-      const signinForm = document.getElementById('signin-form');
-      const signupForm = document.getElementById('signup-form');
-      const signinBtn = document.getElementById('tab-signin-btn');
-      const signupBtn = document.getElementById('tab-signup-btn');
-
-      if (tab === 'signin') {
-        signinForm.classList.remove('hidden');
-        signupForm.classList.add('hidden');
-        signinBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel";
-        signupBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
-      } else {
-        signupForm.classList.remove('hidden');
-        signinForm.classList.add('hidden');
-        signupBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel";
-        signinBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
-      }
-    }
-
-    // AUTHENTICATION LOGIC
-    async function initAuth() {
-      const { data: { session } } = await _supabase.auth.getSession();
-      updateAuthUI(session?.user || null);
-
-      _supabase.auth.onAuthStateChange((_event, session) => {
-        updateAuthUI(session?.user || null);
-      });
-    }
-
-    function updateAuthUI(user) {
-      const navLoginBtn = document.getElementById('nav-login-btn');
-      const navUserProfile = document.getElementById('nav-user-profile');
-      const userEmailDisplay = document.getElementById('user-email-display');
-      const dashboardStatus = document.getElementById('dashboard-user-status');
-
-      if (user) {
-        navLoginBtn.classList.add('hidden');
-        navUserProfile.classList.remove('hidden');
-        userEmailDisplay.innerText = user.email;
-        if (dashboardStatus) {
-          dashboardStatus.innerHTML = `<strong>Current Session:</strong> Logged in as <span class="text-eng-accent font-bold">${user.email}</span>`;
-        }
-      } else {
-        navLoginBtn.classList.remove('hidden');
-        navUserProfile.classList.add('hidden');
-        if (dashboardStatus) {
-          dashboardStatus.innerHTML = `<strong>Current Session:</strong> Guest Mode`;
-        }
-      }
-    }
-
-    async function handleSignIn(e) {
-      e.preventDefault();
-      const email = document.getElementById('signin-email').value;
-      const password = document.getElementById('signin-password').value;
-      const submitBtn = document.getElementById('signin-submit-btn');
-
-      submitBtn.innerText = 'Signing in...';
-      const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
-      submitBtn.innerText = 'Sign In';
-
-      if (error) {
-        alert('Login failed: ' + error.message);
-      } else {
-        alert('Logged in successfully!');
-        toggleModal('auth-modal');
-      }
-    }
-
-    async function handleSignUp(e) {
-      e.preventDefault();
-      const email = document.getElementById('signup-email').value;
-      const password = document.getElementById('signup-password').value;
-      const submitBtn = document.getElementById('signup-submit-btn');
-
-      submitBtn.innerText = 'Creating Account...';
-      const { data, error } = await _supabase.auth.signUp({ email, password });
-      submitBtn.innerText = 'Create Account';
-
-      if (error) {
-        alert('Registration failed: ' + error.message);
-      } else {
-        if (data.user) {
-          await _supabase.from('profiles').insert([{ id: data.user.id, email }]);
-        }
-        alert('Registration successful! Check your email to confirm or sign in now.');
-        switchAuthTab('signin');
-      }
-    }
-
-    async function handleSignOut() {
-      const { error } = await _supabase.auth.signOut();
-      if (!error) {
-        alert('Logged out successfully.');
-      }
+    function changeQty(prodId, delta) {
+      const input = document.getElementById(`qty-${prodId}`);
+      let currentVal = parseInt(input.value) || 1;
+      currentVal += delta;
+      if (currentVal < 1) currentVal = 1;
+      input.value = currentVal;
     }
 
     async function fetchProducts() {
@@ -515,12 +320,24 @@
               <h3 class="font-heading text-lg font-bold uppercase text-eng-steel">${prod.name}</h3>
               <p class="text-xs text-slate-600 mt-2 leading-relaxed">${prod.desc}</p>
             </div>
-            <div class="p-4 bg-slate-50 border-t border-slate-200 flex items-center justify-between">
-              <div>
-                <span class="text-[10px] font-mono uppercase text-slate-400 block">Unit Cost</span>
-                <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
+            
+            <!-- Quantity Counter & Pricing Block -->
+            <div class="p-4 bg-slate-50 border-t border-slate-200 space-y-3">
+              <div class="flex items-center justify-between">
+                <div>
+                  <span class="text-[10px] font-mono uppercase text-slate-400 block">Unit Cost</span>
+                  <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
+                </div>
+                
+                <!-- Quantity Counter -->
+                <div class="flex items-center border border-slate-300 rounded bg-white overflow-hidden shadow-sm">
+                  <button onclick="changeQty('${prod.id}', -1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">-</button>
+                  <input id="qty-${prod.id}" type="number" value="1" min="1" class="w-12 text-center text-xs font-mono font-bold focus:outline-none bg-transparent" readonly />
+                  <button onclick="changeQty('${prod.id}', 1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">+</button>
+                </div>
               </div>
-              <button onclick="initiatePayment('${prod.name}', ${prod.price})" class="bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold px-4 py-2.5 rounded transition-colors shadow">
+
+              <button onclick="initiatePayment('${prod.name}', ${prod.price}, '${prod.id}')" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
                 Buy via Stripe
               </button>
             </div>
@@ -529,12 +346,18 @@
       });
     }
 
-    async function initiatePayment(productName, price) {
+    async function initiatePayment(productName, unitPrice, prodId) {
+      const quantity = parseInt(document.getElementById(`qty-${prodId}`).value) || 1;
+      
       try {
         const response = await fetch('/api/stripe-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ name: productName, amount: price * 100 })
+          body: JSON.stringify({ 
+            name: productName, 
+            price: unitPrice, 
+            quantity: quantity 
+          })
         });
         const session = await response.json();
         if (session.url) {
@@ -547,84 +370,9 @@
       }
     }
 
-    async function handleProductPost(e) {
-      e.preventDefault();
-      const newProd = {
-        name: document.getElementById('prod-name').value,
-        price: parseFloat(document.getElementById('prod-price').value),
-        img: document.getElementById('prod-img').value,
-        desc: document.getElementById('prod-desc').value
-      };
-
-      const { error } = await _supabase.from('products').insert([newProd]);
-      if (!error) {
-        alert('Material listed!');
-        fetchProducts();
-      } else {
-        mockProducts.push({ ...newProd, id: String(mockProducts.length + 1) });
-        fetchProducts();
-      }
-      toggleModal('sell-modal');
-    }
-
-    async function submitReview(e) {
-      e.preventDefault();
-      const productId = document.getElementById('review-prod-id').value;
-      const rating = document.getElementById('review-rating').value;
-      const comment = document.getElementById('review-comment').value;
-
-      const { error } = await _supabase.from('reviews').insert([{ product_id: productId, rating, comment }]);
-      if (!error) {
-        alert('Review logged.');
-        loadReviews();
-      } else {
-        alert('Review updated.');
-        loadReviews();
-      }
-    }
-
-    async function loadReviews() {
-      const container = document.getElementById('reviews-list');
-      const { data: reviews } = await _supabase.from('reviews').select('*');
-      
-      const defaultReviews = reviews || [
-        { product_id: '1', rating: 5, comment: 'Tested batch compressive strength at 28 days. Met all structural requirements.' },
-        { product_id: '2', rating: 4, comment: 'Tensile test confirmed Grade 40 specifications. Good delivery speed.' }
-      ];
-
-      container.innerHTML = defaultReviews.map(rev => `
-        <div class="p-4 bg-white border border-slate-300 rounded">
-          <div class="flex justify-between items-center mb-2">
-            <span class="text-xs font-mono font-bold text-eng-steel">ITEM SPEC ID: #${rev.product_id}</span>
-            <span class="text-amber-500 text-xs">${'★'.repeat(rev.rating)}${'☆'.repeat(5 - rev.rating)}</span>
-          </div>
-          <p class="text-xs text-slate-700 font-medium">"${rev.comment}"</p>
-        </div>
-      `).join('');
-    }
-
     window.onload = () => {
-      initAuth();
       fetchProducts();
-      loadReviews();
     }
   </script>
-
-  <!-- BOTPRESS FLOATING CHAT WIDGET -->
-  <div style="position: fixed; bottom: 20px; right: 20px; z-index: 99999;">
-    <button onclick="var box = document.getElementById('bp-chat-box'); box.style.display = box.style.display === 'none' ? 'block' : 'none';" 
-            style="background-color: #2563eb; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
-      <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
-        <path d="M8 15c4.418 0 8-3.134 8-7s-3.582-7-8-7-8 3.134-8 7c0 1.76.743 3.37 1.97 4.6-.097 1.016-.417 2.13-.771 2.966-.079.186.074.394.273.362 2.256-.37 3.597-.938 4.18-1.234A9.06 9.06 0 0 0 8 15z"/>
-      </svg>
-    </button>
-
-    <div id="bp-chat-box" style="display: none; position: absolute; bottom: 70px; right: 0; width: 380px; height: 550px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #e2e8f0;">
-      <iframe 
-        src="https://cdn.botpress.cloud/webchat/v5.0/shareable.html?configUrl=https://files.bpcontent.cloud/2026/08/26/05/20260826053006-ZW88JRVT.json" 
-        style="width: 100%; height: 100%; border: none;">
-      </iframe>
-    </div>
-  </div>
 </body>
 </html>

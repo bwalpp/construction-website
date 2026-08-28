@@ -382,9 +382,9 @@
                 </div>
                 
                 <div class="flex items-center border border-slate-300 rounded bg-white overflow-hidden shadow-sm">
-                  <button onclick="changeQty('${prod.id}', -1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">-</button>
-                  <input id="qty-${prod.id}" type="number" value="1" min="1" class="w-12 text-center text-xs font-mono font-bold focus:outline-none bg-transparent" readonly />
-                  <button onclick="changeQty('${prod.id}', 1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">+</button>
+                  <button type="button" onclick="changeQty('${prod.id}', -1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer">-</button>
+                  <input id="qty-${prod.id}" type="number" value="1" min="1" onchange="if(this.value<1)this.value=1" class="w-12 text-center text-xs font-mono font-bold focus:outline-none bg-transparent" />
+                  <button type="button" onclick="changeQty('${prod.id}', 1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer">+</button>
                 </div>
               </div>
 

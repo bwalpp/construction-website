@@ -324,8 +324,7 @@
 
     const mockProducts = [
       { id: '1', name: 'Portland Cement Type 1 (40kg)', price: 285.00, img: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=400', desc: 'High-compressive strength hydraulic cement for structural concrete works.' },
-      { id: '2', name: 'Deformed Steel Rebar 12mm x 6m', price: 220.00, img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400', desc: 'Grade 40 high-yield tensile deformed rebar for concrete reinforcement.' },
-      { id: '3', name: 'Phenolic Formwork Plywood 3/4"', price: 1250.00, img: 'https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&q=80&w=400', desc: 'Heavy-duty water-resistant film-faced plywood for slab casting.' }
+      { id: '2', name: 'Deformed Steel Rebar 12mm x 6m', price: 220.00, img: 'https://images.unsplash.com/photo-1504307651254-35680f356dfd?auto=format&fit=crop&q=80&w=400', desc: 'Grade 40 high-yield tensile deformed rebar for concrete reinforcement.' }
     ];
 
     function toggleModal(id) {
@@ -346,12 +345,22 @@
       }
     }
 
+    function changeQty(prodId, delta) {
+      const display = document.getElementById(`qty-${prodId}`);
+      if (!display) return;
+      let currentVal = parseInt(display.textContent) || 1;
+      currentVal += delta;
+      if (currentVal < 1) currentVal = 1;
+      display.textContent = currentVal;
+    }
+
     async function fetchProducts() {
       const grid = document.getElementById('product-grid');
       grid.innerHTML = '';
 
       const { data: products } = await _supabase.from('products').select('*');
-      const itemsToRender = (products && products.length > 0) ? products : mockProducts;
+      const filteredDbProducts = products ? products.filter(p => String(p.id) !== '3') : [];
+      const itemsToRender = (filteredDbProducts && filteredDbProducts.length > 0) ? filteredDbProducts : mockProducts;
 
       itemsToRender.forEach(prod => {
         grid.innerHTML += `
@@ -371,10 +380,15 @@
                   <span class="text-[10px] font-mono uppercase text-slate-400 block">Unit Cost</span>
                   <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                 </div>
-                <span class="text-xs font-mono font-bold text-slate-500 uppercase bg-slate-200 px-2 py-1 rounded">Qty: 1</span>
+                
+                <div class="flex items-center border border-slate-300 rounded bg-white overflow-hidden shadow-sm">
+                  <button type="button" onclick="changeQty('${prod.id}', -1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer select-none border-r border-slate-200">-</button>
+                  <span id="qty-${prod.id}" class="w-10 text-center text-xs font-mono font-bold text-slate-800 select-none">1</span>
+                  <button type="button" onclick="changeQty('${prod.id}', 1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm cursor-pointer select-none border-l border-slate-200">+</button>
+                </div>
               </div>
 
-              <button onclick="initiatePayment('${prod.name.replace(/'/g, "\\'")}', ${prod.price})" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
+              <button onclick="initiatePayment('${prod.name.replace(/'/g, "\\'")}', ${prod.price}, '${prod.id}')" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
                 Buy via Stripe
               </button>
             </div>
@@ -383,7 +397,10 @@
       });
     }
 
-    async function initiatePayment(productName, unitPrice) {
+    async function initiatePayment(productName, unitPrice, prodId) {
+      const quantityDisplay = document.getElementById(`qty-${prodId}`);
+      const quantity = quantityDisplay ? parseInt(quantityDisplay.textContent) || 1 : 1;
+
       try {
         const response = await fetch('/api/stripe-checkout', {
           method: 'POST',
@@ -391,7 +408,7 @@
           body: JSON.stringify({ 
             name: productName, 
             price: Number(unitPrice), 
-            quantity: 1 
+            quantity: quantity 
           })
         });
 

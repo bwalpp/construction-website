@@ -43,7 +43,6 @@
     }
   </script>
   <style>
-    /* Technical Grid/Blueprint Pattern Backgrounds */
     .blueprint-bg {
       background-color: #1B2A4A;
       background-image: 
@@ -65,7 +64,7 @@
   <header class="bg-eng-steel text-white sticky top-0 z-50 shadow-lg border-b-2 border-eng-safety">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
       
-      <!-- Brand Logo with Technical Badge Styling -->
+      <!-- Brand Logo -->
       <a href="#home" class="flex items-center space-x-3 group">
         <div class="w-10 h-10 bg-eng-safety flex items-center justify-center font-heading font-black text-2xl text-white rounded shadow-md transform group-hover:rotate-3 transition-transform">
           B
@@ -86,20 +85,31 @@
         <a href="#dashboard" class="hover:text-eng-safety transition-colors">Dashboard</a>
       </nav>
 
-      <!-- Auth Call To Action -->
-      <div>
-        <button onclick="toggleModal('auth-modal')" class="bg-eng-safety hover:bg-orange-600 text-white font-heading tracking-wider uppercase px-5 py-2.5 rounded text-sm font-bold shadow-md transition-all border border-orange-400">
+      <!-- Dynamic Auth UI State Container -->
+      <div id="auth-nav-container">
+        <!-- Default State: Unauthenticated -->
+        <button id="nav-login-btn" onclick="toggleModal('auth-modal')" class="bg-eng-safety hover:bg-orange-600 text-white font-heading tracking-wider uppercase px-5 py-2.5 rounded text-sm font-bold shadow-md transition-all border border-orange-400">
           Sign In / Register
         </button>
+
+        <!-- Authenticated State (Hidden initially) -->
+        <div id="nav-user-profile" class="hidden flex items-center space-x-3">
+          <div class="text-right hidden sm:block">
+            <span id="user-email-display" class="block text-xs font-mono text-slate-300">user@example.com</span>
+            <span class="text-[10px] font-mono text-emerald-400 uppercase font-bold">● Authenticated</span>
+          </div>
+          <button onclick="handleSignOut()" class="bg-slate-800 hover:bg-slate-700 text-white border border-slate-600 font-heading text-xs uppercase px-3 py-2 rounded transition-colors">
+            Sign Out
+          </button>
+        </div>
       </div>
+
     </div>
   </header>
 
   <!-- 2. HERO SECTION & CALL TO ACTION -->
   <section id="home" class="blueprint-bg text-white py-20 px-4 sm:px-6 lg:px-8 relative border-b border-slate-700">
     <div class="max-w-7xl mx-auto grid grid-cols-1 lg:grid-cols-3 gap-8 items-center relative z-10">
-      
-      <!-- Left 2/3: Value Proposition -->
       <div class="lg:col-span-2 space-y-6">
         <div class="inline-flex items-center space-x-2 bg-slate-800/80 border border-slate-600 px-3 py-1 rounded-sm text-xs font-mono text-eng-accent">
           <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
@@ -122,7 +132,7 @@
         </div>
       </div>
 
-      <!-- Right 1/3: Quick Seller CTA Card -->
+      <!-- Quick Seller CTA Card -->
       <div class="bg-slate-900/90 border-2 border-slate-700 p-6 rounded-lg shadow-2xl relative">
         <div class="absolute -top-3 right-4 bg-eng-accent text-white text-xs font-mono uppercase px-2 py-0.5 rounded font-bold">
           Vendor Portal
@@ -139,7 +149,6 @@
           </button>
         </form>
       </div>
-
     </div>
   </section>
 
@@ -235,6 +244,7 @@
             <p><strong>System Status:</strong> Operational</p>
             <p><strong>Payment Gateway:</strong> Stripe Active</p>
             <p><strong>Database Sync:</strong> Supabase Connected</p>
+            <p id="dashboard-user-status"><strong>Current Session:</strong> Guest Mode</p>
           </div>
         </div>
         <div>
@@ -250,10 +260,9 @@
     </div>
   </section>
 
-  <!-- 5. SITEMAP & FOOTER -->
+  <!-- 5. FOOTER -->
   <footer class="bg-eng-steel text-slate-400 border-t-4 border-eng-safety pt-12 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 grid grid-cols-2 md:grid-cols-5 gap-8 mb-12">
-      <!-- Col 1: Sitemap Navigation -->
       <div>
         <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Sitemap Nav</h4>
         <ul class="space-y-2 text-xs">
@@ -263,7 +272,6 @@
         </ul>
       </div>
 
-      <!-- Col 2: Sitemap Portals -->
       <div>
         <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">System Portals</h4>
         <ul class="space-y-2 text-xs">
@@ -273,7 +281,6 @@
         </ul>
       </div>
 
-      <!-- Col 3: Materials Categories -->
       <div>
         <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Categories</h4>
         <ul class="space-y-2 text-xs">
@@ -283,7 +290,6 @@
         </ul>
       </div>
 
-      <!-- Col 4 & 5: Stripe Payments -->
       <div class="col-span-2">
         <h4 class="font-heading text-white text-sm font-bold tracking-wider uppercase mb-4">Payment Integrations</h4>
         <p class="text-xs text-slate-300 mb-4">Automated payments processing connected with Stripe API.</p>
@@ -298,21 +304,49 @@
     </div>
   </footer>
 
-  <!-- MODAL 1: AUTHENTICATION -->
+  <!-- MODAL 1: TABBED AUTHENTICATION (LOGIN / REGISTER) -->
   <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded max-w-md w-full p-6 shadow-2xl relative border-t-4 border-eng-safety">
       <button onclick="toggleModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
-      <h3 class="font-heading text-xl font-bold uppercase text-eng-steel mb-4">Account Register / Sign In</h3>
-      <form id="auth-form" onsubmit="handleAuth(event)" class="space-y-4">
+      
+      <!-- Tab Controls -->
+      <div class="flex border-b border-slate-200 mb-6">
+        <button id="tab-signin-btn" onclick="switchAuthTab('signin')" class="flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel">
+          Sign In
+        </button>
+        <button id="tab-signup-btn" onclick="switchAuthTab('signup')" class="flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600">
+          Register
+        </button>
+      </div>
+
+      <!-- Sign In Form -->
+      <form id="signin-form" onsubmit="handleSignIn(event)" class="space-y-4">
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Email Address</label>
-          <input type="email" id="auth-email" class="w-full border border-slate-300 p-2.5 rounded text-sm" required />
+          <input type="email" id="signin-email" class="w-full border border-slate-300 p-2.5 rounded text-sm focus:outline-none focus:border-eng-steel" required />
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Password</label>
-          <input type="password" id="auth-password" class="w-full border border-slate-300 p-2.5 rounded text-sm" required />
+          <input type="password" id="signin-password" class="w-full border border-slate-300 p-2.5 rounded text-sm focus:outline-none focus:border-eng-steel" required />
         </div>
-        <button type="submit" class="w-full bg-eng-safety text-white font-heading uppercase py-3 rounded font-bold text-sm">Save & Authenticate</button>
+        <button type="submit" id="signin-submit-btn" class="w-full bg-eng-steel hover:bg-slate-800 text-white font-heading uppercase py-3 rounded font-bold text-sm transition-colors">
+          Sign In
+        </button>
+      </form>
+
+      <!-- Register Form -->
+      <form id="signup-form" onsubmit="handleSignUp(event)" class="space-y-4 hidden">
+        <div>
+          <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Email Address</label>
+          <input type="email" id="signup-email" class="w-full border border-slate-300 p-2.5 rounded text-sm focus:outline-none focus:border-eng-safety" required />
+        </div>
+        <div>
+          <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Create Password</label>
+          <input type="password" id="signup-password" class="w-full border border-slate-300 p-2.5 rounded text-sm focus:outline-none focus:border-eng-safety" minlength="6" required />
+        </div>
+        <button type="submit" id="signup-submit-btn" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase py-3 rounded font-bold text-sm transition-colors">
+          Create Account
+        </button>
       </form>
     </div>
   </div>
@@ -344,7 +378,7 @@
     </div>
   </div>
 
-  <!-- APPLICATION LOGIC, SUPABASE & STRIPE WIRING -->
+  <!-- APPLICATION LOGIC, AUTH, SUPABASE & STRIPE WIRING -->
   <script>
     // 1. Supabase Credentials
     const SUPABASE_URL = 'https://jmqqnvvdmdfcazcmnmhm.supabase.co';
@@ -364,6 +398,103 @@
 
     function toggleModal(id) {
       document.getElementById(id).classList.toggle('hidden');
+    }
+
+    function switchAuthTab(tab) {
+      const signinForm = document.getElementById('signin-form');
+      const signupForm = document.getElementById('signup-form');
+      const signinBtn = document.getElementById('tab-signin-btn');
+      const signupBtn = document.getElementById('tab-signup-btn');
+
+      if (tab === 'signin') {
+        signinForm.classList.remove('hidden');
+        signupForm.classList.add('hidden');
+        signinBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel";
+        signupBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+      } else {
+        signupForm.classList.remove('hidden');
+        signinForm.classList.add('hidden');
+        signupBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel";
+        signinBtn.className = "flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600";
+      }
+    }
+
+    // AUTHENTICATION LOGIC
+    async function initAuth() {
+      const { data: { session } } = await _supabase.auth.getSession();
+      updateAuthUI(session?.user || null);
+
+      _supabase.auth.onAuthStateChange((_event, session) => {
+        updateAuthUI(session?.user || null);
+      });
+    }
+
+    function updateAuthUI(user) {
+      const navLoginBtn = document.getElementById('nav-login-btn');
+      const navUserProfile = document.getElementById('nav-user-profile');
+      const userEmailDisplay = document.getElementById('user-email-display');
+      const dashboardStatus = document.getElementById('dashboard-user-status');
+
+      if (user) {
+        navLoginBtn.classList.add('hidden');
+        navUserProfile.classList.remove('hidden');
+        userEmailDisplay.innerText = user.email;
+        if (dashboardStatus) {
+          dashboardStatus.innerHTML = `<strong>Current Session:</strong> Logged in as <span class="text-eng-accent font-bold">${user.email}</span>`;
+        }
+      } else {
+        navLoginBtn.classList.remove('hidden');
+        navUserProfile.classList.add('hidden');
+        if (dashboardStatus) {
+          dashboardStatus.innerHTML = `<strong>Current Session:</strong> Guest Mode`;
+        }
+      }
+    }
+
+    async function handleSignIn(e) {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value;
+      const password = document.getElementById('signin-password').value;
+      const submitBtn = document.getElementById('signin-submit-btn');
+
+      submitBtn.innerText = 'Signing in...';
+      const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+      submitBtn.innerText = 'Sign In';
+
+      if (error) {
+        alert('Login failed: ' + error.message);
+      } else {
+        alert('Logged in successfully!');
+        toggleModal('auth-modal');
+      }
+    }
+
+    async function handleSignUp(e) {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const submitBtn = document.getElementById('signup-submit-btn');
+
+      submitBtn.innerText = 'Creating Account...';
+      const { data, error } = await _supabase.auth.signUp({ email, password });
+      submitBtn.innerText = 'Create Account';
+
+      if (error) {
+        alert('Registration failed: ' + error.message);
+      } else {
+        if (data.user) {
+          await _supabase.from('profiles').insert([{ id: data.user.id, email }]);
+        }
+        alert('Registration successful! Check your email to confirm or sign in now.');
+        switchAuthTab('signin');
+      }
+    }
+
+    async function handleSignOut() {
+      const { error } = await _supabase.auth.signOut();
+      if (!error) {
+        alert('Logged out successfully.');
+      }
     }
 
     async function fetchProducts() {
@@ -414,21 +545,6 @@
       } catch (e) {
         alert('Payment server endpoint unavailable.');
       }
-    }
-
-    async function handleAuth(e) {
-      e.preventDefault();
-      const email = document.getElementById('auth-email').value;
-      const password = document.getElementById('auth-password').value;
-
-      const { data, error } = await _supabase.auth.signUp({ email, password });
-      if (!error && data.user) {
-        await _supabase.from('profiles').insert([{ id: data.user.id, email }]);
-        alert('Account registered successfully.');
-      } else {
-        alert('Auth setup: ' + (error ? error.message : 'Registered successfully'));
-      }
-      toggleModal('auth-modal');
     }
 
     async function handleProductPost(e) {
@@ -488,6 +604,7 @@
     }
 
     window.onload = () => {
+      initAuth();
       fetchProducts();
       loadReviews();
     }
@@ -495,7 +612,6 @@
 
   <!-- BOTPRESS FLOATING CHAT WIDGET -->
   <div style="position: fixed; bottom: 20px; right: 20px; z-index: 99999;">
-    <!-- TOGGLE BUTTON -->
     <button onclick="var box = document.getElementById('bp-chat-box'); box.style.display = box.style.display === 'none' ? 'block' : 'none';" 
             style="background-color: #2563eb; color: white; border: none; border-radius: 50%; width: 60px; height: 60px; cursor: pointer; box-shadow: 0 4px 12px rgba(0,0,0,0.3); display: flex; align-items: center; justify-content: center;">
       <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" viewBox="0 0 16 16">
@@ -503,7 +619,6 @@
       </svg>
     </button>
 
-    <!-- CHAT WINDOW -->
     <div id="bp-chat-box" style="display: none; position: absolute; bottom: 70px; right: 0; width: 380px; height: 550px; background: white; border-radius: 12px; box-shadow: 0 8px 24px rgba(0,0,0,0.2); overflow: hidden; border: 1px solid #e2e8f0;">
       <iframe 
         src="https://cdn.botpress.cloud/webchat/v5.0/shareable.html?configUrl=https://files.bpcontent.cloud/2026/08/26/05/20260826053006-ZW88JRVT.json" 

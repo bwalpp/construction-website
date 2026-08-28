@@ -1,4 +1,3 @@
-<!-- index.html -->
 <!DOCTYPE html>
 <html lang="en" class="scroll-smooth">
 <head>
@@ -55,7 +54,7 @@
 </head>
 <body class="bg-eng-concrete text-eng-slate font-sans antialiased flex flex-col min-h-screen grid-pattern">
 
-  <!-- HEADER -->
+  <!-- HEADER NAVIGATION -->
   <header class="bg-eng-steel text-white sticky top-0 z-50 shadow-lg border-b-2 border-eng-safety">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between items-center h-20">
       <a href="#home" class="flex items-center space-x-3 group">
@@ -72,9 +71,8 @@
         <a href="#home" class="hover:text-eng-safety transition-colors">Home</a>
         <a href="#store" class="hover:text-eng-safety transition-colors">Store Page</a>
         <a href="#about" class="hover:text-eng-safety transition-colors">About Us</a>
-        <a href="#contact" class="hover:text-eng-safety transition-colors">Contacts</a>
+        <a href="#reviews" class="hover:text-eng-safety transition-colors">Field Ratings</a>
         <a href="#sell" onclick="toggleModal('sell-modal')" class="hover:text-eng-safety transition-colors">Seller Portal</a>
-        <a href="#dashboard" class="hover:text-eng-safety transition-colors">Dashboard</a>
       </nav>
 
       <div id="auth-nav-container">
@@ -139,7 +137,7 @@
     </div>
   </section>
 
-  <!-- STORE PAGE -->
+  <!-- STORE PAGE CATALOG -->
   <main id="store" class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16 flex-grow">
     <div class="flex flex-col md:flex-row justify-between items-start md:items-end mb-8 border-b-2 border-slate-300 pb-4">
       <div>
@@ -153,12 +151,47 @@
 
     <!-- Products Grid -->
     <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-      <!-- Dynamic Products Inserted Here -->
+      <!-- Dynamic Products Populated Here -->
     </div>
   </main>
 
-  <!-- REVIEWS & RATINGS -->
-  <section class="bg-white border-t-2 border-slate-300 py-16">
+  <!-- ABOUT US SECTION -->
+  <section id="about" class="bg-slate-100 border-t border-slate-300 py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-12 items-center">
+        <div>
+          <span class="text-xs font-mono text-eng-accent uppercase tracking-widest font-bold">About Our Supply Chain</span>
+          <h2 class="font-heading text-3xl font-bold uppercase text-eng-steel mt-1 mb-4">Direct Structural Material Procurement</h2>
+          <p class="text-sm text-slate-600 leading-relaxed mb-4">
+            BuildCraft Supplies Engine operates as a high-reliability marketplace matching batch manufacturers with civil engineers, construction buyers, and general contractors across regional worksites.
+          </p>
+          <div class="grid grid-cols-2 gap-4 pt-2 font-mono text-xs text-slate-700">
+            <div class="p-3 bg-white border border-slate-200 rounded">
+              <span class="block text-eng-safety font-bold text-lg">ASTM Certified</span>
+              <span>Compliant with standard civil specs</span>
+            </div>
+            <div class="p-3 bg-white border border-slate-200 rounded">
+              <span class="block text-eng-steel font-bold text-lg">Batch Tracked</span>
+              <span>Verified supplier inventory</span>
+            </div>
+          </div>
+        </div>
+        <div class="bg-eng-steel text-white p-8 rounded shadow-xl blueprint-bg border-l-4 border-eng-safety">
+          <h3 class="font-heading text-xl font-bold uppercase text-white mb-2">Quality Control Guarantee</h3>
+          <p class="text-xs text-slate-300 leading-relaxed mb-4">
+            All materials uploaded to our portal undergo verification. Prices are rendered directly from suppliers with zero hidden processing markups.
+          </p>
+          <div class="flex items-center space-x-2 text-xs font-mono text-emerald-400">
+            <i class="fa-solid fa-shield-halved text-base"></i>
+            <span>Stripe Payment Processing & Verification Active</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS & RATINGS SECTION -->
+  <section id="reviews" class="bg-white border-t-2 border-slate-300 py-16">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
       <div class="mb-8">
         <span class="text-xs font-mono text-eng-accent uppercase tracking-widest font-bold">Quality Control</span>
@@ -175,24 +208,31 @@
             </div>
             <div>
               <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Rating Grade</label>
-              <select id="review-rating" class="w-full p-2 text-sm border border-slate-300 rounded">
-                <option value="5">★★★★★ (5/5) - Excellent Grade</option>
+              <select id="review-rating" class="w-full p-2 text-sm border border-slate-300 rounded font-mono">
+                <option value="5">★★★★★ (5/5) - Grade A Structural</option>
                 <option value="4">★★★★☆ (4/5) - Standard Compliance</option>
                 <option value="3">★★★☆☆ (3/5) - Acceptable</option>
-                <option value="2">★★☆☆☆ (2/5) - Defective</option>
-                <option value="1">★☆☆☆☆ (1/5) - Reject</option>
+                <option value="2">★★☆☆☆ (2/5) - Substandard</option>
+                <option value="1">★☆☆☆☆ (1/5) - Rejected</option>
               </select>
             </div>
             <div>
               <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Inspection Notes</label>
-              <textarea id="review-comment" rows="3" class="w-full p-2 text-sm border border-slate-300 rounded" placeholder="Write review..." required></textarea>
+              <textarea id="review-comment" rows="3" class="w-full p-2 text-sm border border-slate-300 rounded" placeholder="Verify batch quality, set time, or tensile performance..." required></textarea>
             </div>
-            <button type="submit" class="w-full bg-eng-steel text-white font-heading uppercase font-bold py-2.5 rounded text-sm hover:bg-slate-800">Submit Rating</button>
+            <button type="submit" class="w-full bg-eng-steel text-white font-heading uppercase font-bold py-2.5 rounded text-sm hover:bg-slate-800 transition-colors">Submit Rating</button>
           </form>
         </div>
 
         <div class="md:col-span-2 space-y-4" id="reviews-list">
-          <!-- Reviews Populated Dynamically -->
+          <div class="bg-slate-50 p-4 rounded border border-slate-200">
+            <div class="flex justify-between items-center mb-1">
+              <span class="font-heading font-bold text-sm text-eng-steel">Portland Cement Type 1 (40kg)</span>
+              <span class="text-xs text-amber-500 font-bold">★★★★★ 5.0</span>
+            </div>
+            <p class="text-xs text-slate-600">Fast setting speed with good slump consistency. Verified for slab pouring.</p>
+            <span class="text-[10px] font-mono text-slate-400 mt-2 block">— Engineer J. Santos</span>
+          </div>
         </div>
       </div>
     </div>
@@ -201,11 +241,11 @@
   <!-- FOOTER -->
   <footer class="bg-eng-steel text-slate-400 border-t-4 border-eng-safety pt-12 pb-8">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 border-t border-slate-700 pt-6 text-xs text-center font-mono">
-      <p>&copy; 2026 BuildCraft Supplies Engine. All engineering rights reserved.</p>
+      <p>&copy; 2026 BuildCraft Supplies Engine. All civil engineering rights reserved.</p>
     </div>
   </footer>
 
-  <!-- AUTH MODAL -->
+  <!-- AUTHENTICATION MODAL -->
   <div id="auth-modal" class="fixed inset-0 bg-slate-900/80 backdrop-blur-sm hidden z-50 flex items-center justify-center p-4">
     <div class="bg-white rounded max-w-md w-full p-6 shadow-2xl relative border-t-4 border-eng-safety">
       <button onclick="toggleModal('auth-modal')" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600"><i class="fa-solid fa-xmark text-xl"></i></button>
@@ -261,7 +301,7 @@
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Price (PHP)</label>
-          <input type="number" step="0.01" id="prod-price" class="w-full border border-slate-300 p-2.5 rounded text-sm font-mono" required />
+          <input type="number" step="0.01" id="prod-price" class="w-full border border-slate-300 p-2.5 rounded text-sm font-mono" placeholder="285.00" required />
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Material Image URL</label>
@@ -269,20 +309,18 @@
         </div>
         <div>
           <label class="block text-xs font-mono uppercase text-slate-600 mb-1">Technical Specification</label>
-          <textarea id="prod-desc" rows="3" class="w-full border border-slate-300 p-2.5 rounded text-sm" required></textarea>
+          <textarea id="prod-desc" rows="3" class="w-full border border-slate-300 p-2.5 rounded text-sm" placeholder="Spec details..." required></textarea>
         </div>
-        <button type="submit" class="w-full bg-eng-steel text-white font-heading uppercase py-3 rounded font-bold text-sm">Publish Product</button>
+        <button type="submit" class="w-full bg-eng-steel text-white font-heading uppercase py-3 rounded font-bold text-sm hover:bg-slate-800 transition-colors">Publish Product</button>
       </form>
     </div>
   </div>
 
+  <!-- JAVASCRIPT LOGIC -->
   <script>
     const SUPABASE_URL = 'https://jmqqnvvdmdfcazcmnmhm.supabase.co';
     const SUPABASE_ANON_KEY = 'sb_publishable_XP1H9qDYaKOdmKKox-BpNw_koQ3g-ar';
     const _supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
-
-    const STRIPE_PUBLISHABLE_KEY = 'pk_test_51U8gQ31jcq8bFyP30hvQ86nUgKXBxD1u9GquoRSaz0xCBPxnu5dLP11JljKaReL7SfF7grcyBWyYqXndq9N0lQ1V008SfzkaDK';
-    const stripe = Stripe(STRIPE_PUBLISHABLE_KEY);
 
     const mockProducts = [
       { id: '1', name: 'Portland Cement Type 1 (40kg)', price: 285.00, img: 'https://images.unsplash.com/photo-1589939705384-5185137a7f0f?auto=format&fit=crop&q=80&w=400', desc: 'High-compressive strength hydraulic cement for structural concrete works.' },
@@ -294,8 +332,23 @@
       document.getElementById(id).classList.toggle('hidden');
     }
 
+    function switchAuthTab(tab) {
+      if (tab === 'signin') {
+        document.getElementById('signin-form').classList.remove('hidden');
+        document.getElementById('signup-form').classList.add('hidden');
+        document.getElementById('tab-signin-btn').className = 'flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel';
+        document.getElementById('tab-signup-btn').className = 'flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600';
+      } else {
+        document.getElementById('signin-form').classList.add('hidden');
+        document.getElementById('signup-form').classList.remove('hidden');
+        document.getElementById('tab-signup-btn').className = 'flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-eng-safety text-eng-steel';
+        document.getElementById('tab-signin-btn').className = 'flex-1 py-2 font-heading text-sm uppercase font-bold border-b-2 border-transparent text-slate-400 hover:text-slate-600';
+      }
+    }
+
     function changeQty(prodId, delta) {
       const input = document.getElementById(`qty-${prodId}`);
+      if (!input) return;
       let currentVal = parseInt(input.value) || 1;
       currentVal += delta;
       if (currentVal < 1) currentVal = 1;
@@ -321,15 +374,13 @@
               <p class="text-xs text-slate-600 mt-2 leading-relaxed">${prod.desc}</p>
             </div>
             
-            <!-- Quantity Counter & Pricing Block -->
             <div class="p-4 bg-slate-50 border-t border-slate-200 space-y-3">
               <div class="flex items-center justify-between">
                 <div>
                   <span class="text-[10px] font-mono uppercase text-slate-400 block">Unit Cost</span>
-                  <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2})}</span>
+                  <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                 </div>
                 
-                <!-- Quantity Counter -->
                 <div class="flex items-center border border-slate-300 rounded bg-white overflow-hidden shadow-sm">
                   <button onclick="changeQty('${prod.id}', -1)" class="px-3 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm">-</button>
                   <input id="qty-${prod.id}" type="number" value="1" min="1" class="w-12 text-center text-xs font-mono font-bold focus:outline-none bg-transparent" readonly />
@@ -337,7 +388,7 @@
                 </div>
               </div>
 
-              <button onclick="initiatePayment('${prod.name}', ${prod.price}, '${prod.id}')" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
+              <button onclick="initiatePayment('${prod.name.replace(/'/g, "\\'")}', ${prod.price}, '${prod.id}')" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
                 Buy via Stripe
               </button>
             </div>
@@ -347,32 +398,112 @@
     }
 
     async function initiatePayment(productName, unitPrice, prodId) {
-      const quantity = parseInt(document.getElementById(`qty-${prodId}`).value) || 1;
-      
+      const quantityInput = document.getElementById(`qty-${prodId}`);
+      const quantity = quantityInput ? parseInt(quantityInput.value) || 1 : 1;
+
       try {
         const response = await fetch('/api/stripe-checkout', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
             name: productName, 
-            price: unitPrice, 
+            price: Number(unitPrice), 
             quantity: quantity 
           })
         });
+
         const session = await response.json();
-        if (session.url) {
+
+        if (response.ok && session.url) {
           window.location.href = session.url;
         } else {
-          alert('Failed to obtain payment link.');
+          console.error('Stripe API Error:', session);
+          alert(`Payment Error: ${session.error || 'Failed to obtain payment link.'}`);
         }
       } catch (e) {
+        console.error('Server endpoint error:', e);
         alert('Payment server endpoint unavailable.');
       }
     }
 
+    async function handleSignIn(e) {
+      e.preventDefault();
+      const email = document.getElementById('signin-email').value;
+      const password = document.getElementById('signin-password').value;
+      const { data, error } = await _supabase.auth.signInWithPassword({ email, password });
+      if (error) alert(error.message);
+      else toggleModal('auth-modal');
+    }
+
+    async function handleSignUp(e) {
+      e.preventDefault();
+      const email = document.getElementById('signup-email').value;
+      const password = document.getElementById('signup-password').value;
+      const { data, error } = await _supabase.auth.signUp({ email, password });
+      if (error) alert(error.message);
+      else {
+        alert('Check your email for confirmation!');
+        toggleModal('auth-modal');
+      }
+    }
+
+    async function handleSignOut() {
+      await _supabase.auth.signOut();
+    }
+
+    async function handleProductPost(e) {
+      e.preventDefault();
+      const name = document.getElementById('prod-name').value;
+      const price = parseFloat(document.getElementById('prod-price').value);
+      const img = document.getElementById('prod-img').value;
+      const desc = document.getElementById('prod-desc').value;
+
+      const { error } = await _supabase.from('products').insert([{ name, price, img, desc }]);
+      if (error) alert(error.message);
+      else {
+        toggleModal('sell-modal');
+        fetchProducts();
+      }
+    }
+
+    async function submitReview(e) {
+      e.preventDefault();
+      const prodId = document.getElementById('review-prod-id').value;
+      const rating = document.getElementById('review-rating').value;
+      const comment = document.getElementById('review-comment').value;
+
+      const list = document.getElementById('reviews-list');
+      list.innerHTML = `
+        <div class="bg-slate-50 p-4 rounded border border-slate-200">
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-heading font-bold text-sm text-eng-steel">Product ID #${prodId}</span>
+            <span class="text-xs text-amber-500 font-bold">★ ${rating}.0</span>
+          </div>
+          <p class="text-xs text-slate-600">${comment}</p>
+        </div>
+      ` + list.innerHTML;
+
+      document.getElementById('review-form').reset();
+    }
+
+    _supabase.auth.onAuthStateChange((event, session) => {
+      const loginBtn = document.getElementById('nav-login-btn');
+      const profile = document.getElementById('nav-user-profile');
+      const emailDisplay = document.getElementById('user-email-display');
+
+      if (session?.user) {
+        if (loginBtn) loginBtn.classList.add('hidden');
+        if (profile) profile.classList.remove('hidden');
+        if (emailDisplay) emailDisplay.textContent = session.user.email;
+      } else {
+        if (loginBtn) loginBtn.classList.remove('hidden');
+        if (profile) profile.classList.add('hidden');
+      }
+    });
+
     window.onload = () => {
       fetchProducts();
-    }
+    };
   </script>
 </body>
 </html>

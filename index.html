@@ -371,24 +371,10 @@
                   <span class="text-[10px] font-mono uppercase text-slate-400 block">Unit Cost</span>
                   <span class="text-xl font-bold font-mono text-eng-steel">₱${Number(prod.price).toLocaleString('en-PH', {minimumFractionDigits: 2, maximumFractionDigits: 2})}</span>
                 </div>
-                
-                <div class="flex items-center space-x-2">
-                  <label for="qty-${prod.id}" class="text-xs font-mono text-slate-500 font-bold uppercase">Qty:</label>
-                  <select id="qty-${prod.id}" class="border border-slate-300 rounded px-2 py-1 bg-white text-xs font-mono font-bold text-eng-steel focus:outline-none focus:ring-2 focus:ring-eng-accent cursor-pointer">
-                    <option value="1">1</option>
-                    <option value="2">2</option>
-                    <option value="3">3</option>
-                    <option value="4">4</option>
-                    <option value="5">5</option>
-                    <option value="10">10</option>
-                    <option value="20">20</option>
-                    <option value="50">50</option>
-                    <option value="100">100</option>
-                  </select>
-                </div>
+                <span class="text-xs font-mono font-bold text-slate-500 uppercase bg-slate-200 px-2 py-1 rounded">Qty: 1</span>
               </div>
 
-              <button onclick="initiatePayment('${prod.name.replace(/'/g, "\\'")}', ${prod.price}, '${prod.id}')" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
+              <button onclick="initiatePayment('${prod.name.replace(/'/g, "\\'")}', ${prod.price})" class="w-full bg-eng-safety hover:bg-orange-600 text-white font-heading uppercase text-xs font-bold py-2.5 rounded transition-colors shadow">
                 Buy via Stripe
               </button>
             </div>
@@ -397,10 +383,7 @@
       });
     }
 
-    async function initiatePayment(productName, unitPrice, prodId) {
-      const quantitySelect = document.getElementById(`qty-${prodId}`);
-      const quantity = quantitySelect ? parseInt(quantitySelect.value) || 1 : 1;
-
+    async function initiatePayment(productName, unitPrice) {
       try {
         const response = await fetch('/api/stripe-checkout', {
           method: 'POST',
@@ -408,7 +391,7 @@
           body: JSON.stringify({ 
             name: productName, 
             price: Number(unitPrice), 
-            quantity: quantity 
+            quantity: 1 
           })
         });
 
